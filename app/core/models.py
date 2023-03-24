@@ -46,3 +46,14 @@ class User(AbstractBaseUser, PermissionsMixin):
     objects = UserManager()
 
     USERNAME_FIELD = 'email'
+
+
+class Product(models.Model):
+    name = models.CharField(max_length=255, unique = True)
+    calories = models.IntegerField()
+    total_fat = models.FloatField()
+    protein = models.FloatField()
+    carbohydate = models.FloatField()
+    sugars = models.FloatField()
+    fiber = models.FloatField()
+    nutrition_score = models.FloatField()
