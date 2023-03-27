@@ -4,7 +4,7 @@ LABEL maintainer="mkudlinski1"
 
 ENV PYTHONUNBUFFERED 1
 COPY ./requirements.txt /tmp/requirements.txt
-COPY ./nutrition.csv ./nutrition.csv
+COPY ./nutrition.csv /nutrition.csv
 COPY ./app /app
 WORKDIR /app
 EXPOSE 8000

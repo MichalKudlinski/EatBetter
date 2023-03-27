@@ -53,7 +53,7 @@ class Product(models.Model):
     calories = models.IntegerField()
     total_fat = models.FloatField()
     protein = models.FloatField()
-    carbohydate = models.FloatField()
+    carbohydrate = models.FloatField()
     sugars = models.FloatField()
     fiber = models.FloatField()
     nutrition_score = models.FloatField()

@@ -1,7 +1,7 @@
-d
+
 import pandas as pd
 
-foods_all_columns = pd.read_csv("app/nutrition.csv")
+foods_all_columns = pd.read_csv("/nutrition.csv")
 
 foods_all_columns.rename( columns={'Unnamed: 0':'id'}, inplace=True )
 foods_useful_columns = foods_all_columns[['id','name','serving_size','calories','total_fat','protein','carbohydrate','sugars','fiber']]

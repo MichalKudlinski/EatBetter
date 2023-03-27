@@ -3,4 +3,5 @@ from utils.data_into_models import get_data_into_model
 
 
 class Command(BaseCommand):
-    get_data_into_model()
+    def handle(self,*args,**option):
+        get_data_into_model()
