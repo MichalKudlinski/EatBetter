@@ -1,5 +1,6 @@
 import sys
-
+import uuid
+import os
 from django.conf import settings
 from django.contrib.auth import get_user_model
 from django.contrib.auth.models import (AbstractBaseUser, BaseUserManager,
@@ -10,7 +11,16 @@ from django.db.models.signals import post_save
 from django.dispatch import receiver
 
 
-# Create your models here.
+
+
+
+def recipe_image_file_path(instance, filename):
+    """Generate file path for new recipe image."""
+    ext = os.path.splitext(filename)[1]
+    filename = f'{uuid.uuid4()}{ext}'
+
+    return os.path.join('uploads', 'recipe', filename)
+
 class UserManager(BaseUserManager):
     """Manager for users"""
 
@@ -57,3 +67,54 @@ class Product(models.Model):
     sugars = models.FloatField()
     fiber = models.FloatField()
     nutrition_score = models.FloatField()
+
+
+class Recipe(models.Model):
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete= models.CASCADE)
+    name = models.CharField(max_length = 255)
+    description = models.TextField(blank = True)
+    healthy_products = models.ManyToManyField('Product')
+    ingredients = models.ManyToManyField('Ingredient')
+    time_minutes = models.IntegerField()
+    tags = models.ManyToManyField('Tag')
+    prize = models.FloatField()
+    image = models.ImageField(null = True, upload_to = recipe_image_file_path)
+
+    def __str__(self):
+        return self.name
+    
+
+
+class Tag(models.Model):
+    """Tag for filtering recipes."""
+    name = models.CharField(max_length=255)
+    user = models.ForeignKey(settings.AUTH_USER_MODEL,
+                              on_delete= models.CASCADE)
+
+    def __str__(self):
+        return self.name
+
+
+class Ingredient(models.Model):
+    """Ingredient for recipes."""
+    name = models.CharField(max_length=255)
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, 
+                             on_delete= models.CASCADE)
+    
+    def __str__(self):
+        return self.name
+
+
+
+class UserProfile(models.Model):
+    user = models.OneToOneField(
+        User, on_delete=models.CASCADE, related_name="user")
+    recipies = models.ManyToManyField(Recipe, default=None, blank=True)
+
+@ receiver(post_save, sender=User)
+def UserProfileCreator(sender, instance=None, created=False, **kwargs):
+    if created:
+        UserProfile.objects.create(
+            user=instance)
+
+        

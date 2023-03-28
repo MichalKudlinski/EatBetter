@@ -3,6 +3,7 @@ from django.shortcuts import render
 from rest_framework import authentication, generics, permissions
 from rest_framework.authtoken.views import ObtainAuthToken
 from rest_framework.settings import api_settings
+from rest_framework import viewsets, mixins
 
 from . import serializers
 
