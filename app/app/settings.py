@@ -44,7 +44,9 @@ INSTALLED_APPS = [
     'core',
     'users',
     'utils',
-    'recipe'
+    'recipe',
+    'user_profiles',
+    'comments'
 
 ]
 

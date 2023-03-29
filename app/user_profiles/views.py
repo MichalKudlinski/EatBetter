@@ -14,6 +14,7 @@ class UserProfileViewSet(mixins.ListModelMixin,
                          mixins.RetrieveModelMixin,
                          mixins.UpdateModelMixin,
                          viewsets.GenericViewSet):
+    
     quseryset = UserProfile.objects.all()
     serializer_class  = UserProfile
     permission_classes = IsAuthenticatedOrReadOnly
