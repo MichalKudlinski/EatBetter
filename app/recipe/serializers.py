@@ -28,14 +28,20 @@ class ProductSerializer(ModelSerializer):
         model = Product
         fields = "__all__"
 
+class ProductNameSerializer(ModelSerializer):
+    class Meta:
+        model = Product
+        fields = ['id','name']
+
 
 class RecipeSerializer(ModelSerializer):
     tags = TagSerializer(many = True, required = False)
     ingredients = IngredientSerializer(many = True, required = False)
-    healthy_products = ProductSerializer(many = True, required = True)
+    healthy_products = ProductNameSerializer(many = True, required = True)
     class Meta:
         model = Recipe
-        fields = ['id','name','healthy_products','tags','ingredients','time_minutes','prize']
+        fields = ['id','name','healthy_products','tags','ingredients','time_minutes','prize','average_rating']
+        read_only_fields=['id','average_rating']
     
     def _get_or_create_tags(self, tags, recipe):
         """Handle getting or creating tags as needed."""
