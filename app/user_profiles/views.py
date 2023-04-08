@@ -17,8 +17,8 @@ class UserProfileViewSet(mixins.ListModelMixin,
     
     quseryset = UserProfile.objects.all()
     serializer_class  = UserProfile
-    permission_classes = IsAuthenticatedOrReadOnly
-    authentication_classes = TokenAuthentication
+    permission_classes = [IsAuthenticatedOrReadOnly]
+    authentication_classes = [TokenAuthentication]
 
     @action(methods = ['patch','get'], detail = True)
     def my_profile(self,request):
